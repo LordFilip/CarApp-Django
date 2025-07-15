@@ -1,0 +1,49 @@
+{% extends 'cars/base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/car_details.css' %}">
+{% endblock %}
+
+{% block title %}Detalji automobila{% endblock %}
+
+{% block content %}
+<div class="car-details-container">
+  
+  <!-- Leva strana: Detalji automobila -->
+  <div class="car-info">
+    <h1>{{ car.brand }} {{ car.model }}</h1>
+    <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
+    <p><strong>Godina:</strong> {{ car.year }}</p>
+    <p><strong>Tip:</strong> {{ car.car_type }}</p>
+    <p><strong>Gorivo:</strong> {{ car.fuel_type }}</p>
+    <p><strong>Kilometraža:</strong> {{ car.mileage }} km</p>
+    <p><strong>Vlasnik:</strong> {{ car.owner.username }}</p>
+
+    <div class="car-actions">
+      {% if user.is_authenticated and user == car.owner %}
+        <a href="{% url 'car_edit' car.id %}">Izmeni</a>
+        <form action="{% url 'car_delete' car.id %}" method="post" style="margin:0;">
+          {% csrf_token %}
+          <button type="submit" onclick="return confirm('Da li si siguran da želiš da obrišeš ovaj auto?');">Obriši</button>
+        </form>
+      {% endif %}
+    </div>
+    <a href="{% url 'car_list' %}">← Nazad na listu</a>
+  </div>
+
+  <!-- Desna strana: Preporučeni automobili -->
+  <div class="related-cars">
+    <h2>Još automobila</h2>
+    <div class="related-cars-grid">
+      {% for rc in related_cars %}
+        <div class="related-car-card">
+          <a href="{% url 'car_details' rc.id %}">
+            <img src="{{ rc.image.url }}" alt="{{ rc.brand }} {{ rc.model }}">
+            <p>{{ rc.brand }} {{ rc.model }}</p>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

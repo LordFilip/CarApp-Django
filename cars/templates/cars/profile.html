@@ -1,0 +1,29 @@
+{%extends 'cars/base.html' %}
+
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{%block content%}
+    <h1>Profil korisnika</h1>
+
+
+    <div class="car-cards-container">
+    {% for car in cars %}
+    <a href={% url 'car_details' car.id%}>
+      <div class="car-card">
+        <h2>{{ car.brand }} {{ car.model }}</h2>
+        <p><strong>Godina:</strong> {{ car.year }}</p>
+        <p><strong>Vlasnik:</strong> {{ car.owner }}</p>
+        <p><strong>Tip:</strong> {{ car.car_type }}</p>
+        <p><strong>Kilometraža:</strong> {{ car.mileage }} km</p>
+        <p><strong>Gorivo:</strong> {{ car.fuel_type }}</p>
+        <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
+      </div>
+    </a>
+    {% empty %}
+      <p>Nema automobila.</p>
+    {% endfor %}
+  </div>
+{%endblock%}
