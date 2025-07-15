@@ -24,24 +24,29 @@ def logout_view(request):
     return redirect('login')
 
 
-#@login_required
-#def add_car(request):
-#   return redirect('add_car')
+
 
 def car_details(request, car_id):
     car = get_object_or_404(Car, id=car_id)
-    
 
-    same_owner_cars = Car.objects.filter(owner = car.owner).exclude(id=car.id)[:4]
+    same_owner_cars = Car.objects.filter(owner=car.owner).exclude(id=car.id)[:4]
+    related_cars = list(same_owner_cars)
+    count = len(related_cars)
 
-    if same_owner_cars.count()<4:
-        needed = 4- same_owner_cars.count()
-        other_cars = Car.objects.exclude(
-            Q(id=car.id) | Q(id__in=same_owner_cars.values_list('id',flat=True))
+    if count < 4:
+        needed = 4 - count
+        same_type_cars = Car.objects.filter(car_type=car.car_type).exclude(
+            Q(id=car.id) | Q(id__in=[c.id for c in related_cars])
         )[:needed]
-        related_cars = list(same_owner_cars) + list(other_cars)
-    else:
-        related_cars = same_owner_cars
+        related_cars.extend(same_type_cars)
+        count = len(related_cars)
+
+    if count < 4:
+        needed = 4 - count
+        other_cars = Car.objects.exclude(
+            Q(id=car.id) | Q(id__in=[c.id for c in related_cars])
+        )[:needed]
+        related_cars.extend(other_cars)
 
     return render(request, 'cars/car_details.html', {'car': car, 'related_cars': related_cars})
 

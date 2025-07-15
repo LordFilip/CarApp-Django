@@ -30,6 +30,11 @@ class Car(models.Model):
     mileage = models.PositiveIntegerField(help_text='Kilometraza')
     fuel_type = models.CharField(max_length=10, choices=FUEL_CHOICES)
     car_type = models.CharField(max_length=15, choices=CAR_TYPE_CHOICES)
+    description = models.TextField(
+        max_length=1000,
+        blank=True,
+        help_text='Kratak opis automobila (opciono)'
+    )
 
     def __str__(self):
         return f"{self.brand} {self.model} ({self.year})"

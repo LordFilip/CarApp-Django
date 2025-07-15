@@ -18,16 +18,18 @@
     <p><strong>Gorivo:</strong> {{ car.fuel_type }}</p>
     <p><strong>Kilometraža:</strong> {{ car.mileage }} km</p>
     <p><strong>Vlasnik:</strong> {{ car.owner.username }}</p>
-
+    <p><strong>Opis:</strong> {{ car.description }}</p>
+{% if user.is_authenticated and user == car.owner %}
     <div class="car-actions">
-      {% if user.is_authenticated and user == car.owner %}
+      
         <a href="{% url 'car_edit' car.id %}">Izmeni</a>
         <form action="{% url 'car_delete' car.id %}" method="post" style="margin:0;">
           {% csrf_token %}
           <button type="submit" onclick="return confirm('Da li si siguran da želiš da obrišeš ovaj auto?');">Obriši</button>
         </form>
-      {% endif %}
+      
     </div>
+    {% endif %}
     <a href="{% url 'car_list' %}">← Nazad na listu</a>
   </div>
 
