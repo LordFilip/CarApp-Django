@@ -35,6 +35,7 @@ class Car(models.Model):
         blank=True,
         help_text='Kratak opis automobila (opciono)'
     )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.brand} {self.model} ({self.year})"

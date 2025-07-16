@@ -6,11 +6,38 @@ from .forms import CarForm, RegisterForm
 from django.contrib.auth import logout as auth_logout
 from django.db.models import Q
 
-# Create your views here.
 
 def car_list(request):
+    fuel_filter = request.GET.get('fuel_type')
+    car_type_filter = request.GET.get('car_type')
+    year_min = request.GET.get('year_min')
+    year_max = request.GET.get('year_max')
+
     cars = Car.objects.all()
-    return render(request, 'cars/car_list.html', {'cars': cars})
+
+    if fuel_filter:
+        cars = cars.filter(fuel_type=fuel_filter)
+    if car_type_filter:
+        cars = cars.filter(car_type=car_type_filter)
+    if year_min:
+        cars = cars.filter(year__gte=year_min)
+    if year_max:
+        cars = cars.filter(year__lte=year_max)
+
+    fuel_types = Car.objects.values_list('fuel_type', flat=True).distinct()
+    car_types = Car.objects.values_list('car_type', flat=True).distinct()
+
+    return render(request, 'cars/car_list.html', {
+        'cars': cars,
+        'fuel_types': fuel_types,
+        'car_types': car_types,
+        'selected_fuel': fuel_filter,
+        'selected_car_type': car_type_filter,
+        'year_min': year_min,
+        'year_max': year_max,
+    })
+
+
 
 
 @login_required

@@ -19,6 +19,8 @@
     <p><strong>Kilometraža:</strong> {{ car.mileage }} km</p>
     <p><strong>Vlasnik:</strong> {{ car.owner.username }}</p>
     <p><strong>Opis:</strong> {{ car.description }}</p>
+    <p><strong>Postavljeno:</strong> pre {{ car.created_at|timesince }} </p>
+
 {% if user.is_authenticated and user == car.owner %}
     <div class="car-actions">
       
