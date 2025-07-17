@@ -5,7 +5,8 @@ from .models import Car
 from .forms import CarForm, RegisterForm
 from django.contrib.auth import logout as auth_logout
 from django.db.models import Q
-
+from django.views.decorators.http import require_POST
+from django.contrib.auth.models import User
 
 def car_list(request):
     fuel_filter = request.GET.get('fuel_type')
@@ -57,6 +58,23 @@ def profile(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+
+@require_POST
+def guest_login(request):
+    
+    guest_user, created = User.objects.get_or_create(username='guest')
+
+    
+    if created:
+        guest_user.set_unusable_password() 
+        guest_user.save()
+
+   
+    login(request, guest_user)
+
+    
+    return redirect('car_list')
 
 
 

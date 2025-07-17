@@ -6,7 +6,6 @@
     <title>{% block title %}Car App{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block extra_css %}{% endblock %}
-    
 </head>
 
 <body>
@@ -15,13 +14,19 @@
             <a href="{% url 'car_list' %}" class="nav-logo">Car App</a>
 
             {% if user.is_authenticated %}
-                <span class="nav-welcome">Dobrodošli, {{ user.username }}</span>
-                <div class="nav-links">
-                    <a href="{% url 'profile'%}">Profile</a>
-                    <a href="{% url 'add_car'%}" > Dodaj automobil</a>
-
-                    <a href="{% url 'logout' %}">Logout</a>
-                </div>
+                {% if user.username == 'guest' %}
+                    <div class="nav-links">
+                        <a href="{% url 'login' %}">Login</a>
+                        <a href="{% url 'register' %}">Register</a>
+                    </div>
+                {% else %}
+                    <span class="nav-welcome">Dobrodošli, {{ user.username }}</span>
+                    <div class="nav-links">
+                        <a href="{% url 'profile' %}">Profile</a>
+                        <a href="{% url 'add_car' %}">Dodaj automobil</a>
+                        <a href="{% url 'logout' %}">Logout</a>
+                    </div>
+                {% endif %}
             {% else %}
                 <div class="nav-links">
                     <a href="{% url 'login' %}">Login</a>

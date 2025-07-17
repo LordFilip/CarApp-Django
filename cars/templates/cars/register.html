@@ -43,6 +43,11 @@
     <button type="submit" class="btn">Register</button>
   </form>
   <p>Imate nalog? <a href="{% url 'login' %}">Uloguj se</a></p>
+
+   <form action="{% url 'guest_login' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="guest-login-btn">Login as Guest</button>
+                    </form>
 </div>
 
 {% endblock %}
