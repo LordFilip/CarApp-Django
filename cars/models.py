@@ -35,6 +35,9 @@ class Car(models.Model):
         blank=True,
         help_text='Kratak opis automobila (opciono)'
     )
+    engine_displacement = models.PositiveIntegerField(
+        help_text="Engine displacement in cubic centimeters (e.g. 1600)"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -16,50 +16,63 @@
 <form method="get" action="."
       style="margin-bottom: 30px; padding: 15px; background-color: #f5f7fa; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
 
-    <label for="fuel-select" style="font-weight: bold; font-size: 16px; color: #333;">
-      Filter po gorivu:
-    </label>
-    <select name="fuel_type" id="fuel-select" onchange="this.form.submit()"
-            style="padding: 8px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff; transition: border-color 0.3s ease;">
-      <option value="">-- Sve --</option>
-      {% for fuel in fuel_types %}
-        <option value="{{ fuel }}" {% if fuel == selected_fuel %}selected{% endif %}>{{ fuel }}</option>
-      {% endfor %}
-    </select>
+  <label for="fuel-select" style="font-weight: bold; font-size: 16px; color: #333;">
+    Filter po gorivu:
+  </label>
+  <select name="fuel_type" id="fuel-select" onchange="this.form.submit()"
+          style="padding: 8px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff; transition: border-color 0.3s ease;">
+    <option value="">-- Sve --</option>
+    {% for fuel in fuel_types %}
+      <option value="{{ fuel }}" {% if fuel == selected_fuel %}selected{% endif %}>{{ fuel }}</option>
+    {% endfor %}
+  </select>
 
-    <label for="car-type-select" style="font-weight: bold; font-size: 16px; color: #333;">
-      Tip auta:
-    </label>
-    <select name="car_type" id="car-type-select" onchange="this.form.submit()"
-            style="padding: 8px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff; transition: border-color 0.3s ease;">
-      <option value="">-- Svi --</option>
-      {% for ctype in car_types %}
-        <option value="{{ ctype }}" {% if ctype == selected_car_type %}selected{% endif %}>{{ ctype }}</option>
-      {% endfor %}
-    </select>
+  <label for="car-type-select" style="font-weight: bold; font-size: 16px; color: #333;">
+    Tip auta:
+  </label>
+  <select name="car_type" id="car-type-select" onchange="this.form.submit()"
+          style="padding: 8px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff; transition: border-color 0.3s ease;">
+    <option value="">-- Svi --</option>
+    {% for ctype in car_types %}
+      <option value="{{ ctype }}" {% if ctype == selected_car_type %}selected{% endif %}>{{ ctype }}</option>
+    {% endfor %}
+  </select>
 
-    <label for="year-min" style="font-weight: bold; font-size: 16px; color: #333;">
-      Godina od:
-    </label>
-    <input type="number" name="year_min" id="year-min" value="{{ year_min }}" placeholder="npr. 2010" min="1900"
-           style="padding: 8px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; width: 120px;">
+  <label for="year-min" style="font-weight: bold; font-size: 16px; color: #333;">
+    Godina od:
+  </label>
+  <input type="number" name="year_min" id="year-min" value="{{ year_min }}" placeholder="npr. 2010" min="1900"
+         style="padding: 8px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; width: 120px;">
 
-    <label for="year-max" style="font-weight: bold; font-size: 16px; color: #333;">
-      Godina do:
-    </label>
-    <input type="number" name="year_max" id="year-max" value="{{ year_max }}" placeholder="npr. 2024" max="2100"
-           style="padding: 8px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; width: 120px;">
+  <label for="year-max" style="font-weight: bold; font-size: 16px; color: #333;">
+    Godina do:
+  </label>
+  <input type="number" name="year_max" id="year-max" value="{{ year_max }}" placeholder="npr. 2024" max="2100"
+         style="padding: 8px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; width: 120px;">
 
-    <button type="submit"
-            style="padding: 8px 16px; font-size: 16px; background-color: #3498db; color: white; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.3s ease;">
-      Filtriraj
-    </button>
+  <label for="displacement-min" style="font-weight: bold; font-size: 16px; color: #333;">
+    Kubikaža od:
+  </label>
+  <input type="number" name="displacement_min" id="displacement-min" value="{{ displacement_min }}" placeholder="npr. 1000" min="0"
+         style="padding: 8px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; width: 120px;">
 
-    <button type="button"
-            onclick="window.location.href=window.location.pathname"
-            style="padding: 8px 16px; font-size: 16px; background-color: #e74c3c; color: white; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.3s ease;">
-      Poništi filtere
-    </button>
+  <label for="displacement-max" style="font-weight: bold; font-size: 16px; color: #333;">
+    Kubikaža do:
+  </label>
+  <input type="number" name="displacement_max" id="displacement-max" value="{{ displacement_max }}" placeholder="npr. 3000" min="0"
+         style="padding: 8px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; width: 120px;">
+
+  <button type="submit"
+          style="padding: 8px 16px; font-size: 16px; background-color: #3498db; color: white; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.3s ease;">
+    Filtriraj
+  </button>
+
+  <button type="button"
+          onclick="window.location.href=window.location.pathname"
+          style="padding: 8px 16px; font-size: 16px; background-color: #e74c3c; color: white; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.3s ease;">
+    Poništi filtere
+  </button>
+
 </form>
 
 
@@ -78,11 +91,13 @@
         <p><strong>Tip:</strong> {{ car.car_type }}</p>
         <p><strong>Kilometraža:</strong> {{ car.mileage }} km</p>
         <p><strong>Gorivo:</strong> {{ car.fuel_type }}</p>
+        <p><strong>Kubikaza:</strong> {{ car.engine_displacement }}</p>
        {% if car.image %}
             <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
         {% else %}
             <p><em>Nema slike</em></p>
         {% endif %}
+        
         <p><strong>Postavljeno:</strong> pre {{ car.created_at|timesince }} </p>
 
 

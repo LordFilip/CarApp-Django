@@ -12,6 +12,8 @@ def car_list(request):
     car_type_filter = request.GET.get('car_type')
     year_min = request.GET.get('year_min')
     year_max = request.GET.get('year_max')
+    displacement_min = request.GET.get('displacement_min')
+    displacement_max = request.GET.get('displacement_max')
 
     cars = Car.objects.all()
 
@@ -23,6 +25,10 @@ def car_list(request):
         cars = cars.filter(year__gte=year_min)
     if year_max:
         cars = cars.filter(year__lte=year_max)
+    if displacement_min:
+        cars = cars.filter(engine_displacement__gte=displacement_min)
+    if displacement_max:
+        cars = cars.filter(engine_displacement__lte=displacement_max)
 
     fuel_types = Car.objects.values_list('fuel_type', flat=True).distinct()
     car_types = Car.objects.values_list('car_type', flat=True).distinct()
@@ -35,6 +41,8 @@ def car_list(request):
         'selected_car_type': car_type_filter,
         'year_min': year_min,
         'year_max': year_max,
+        'displacement_min': displacement_min,
+        'displacement_max': displacement_max,
     })
 
 

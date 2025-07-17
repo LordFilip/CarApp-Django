@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class CarForm(forms.ModelForm):
     class Meta:
         model = Car
-        fields = ['brand', 'model', 'year', 'image', 'mileage', 'fuel_type', 'car_type','description']
+        fields = ['brand', 'model', 'year', 'image', 'mileage', 'fuel_type', 'car_type','engine_displacement','description',]
         widgets = {
             'fuel_type': forms.Select(attrs={'class': 'form-control'}),
             'car_type': forms.Select(attrs={'class': 'form-control'}),
@@ -15,11 +15,13 @@ class CarForm(forms.ModelForm):
             'model': forms.TextInput(attrs={'class': 'form-control'}),
             'year': forms.NumberInput(attrs={'class': 'form-control'}),
             'mileage': forms.NumberInput(attrs={'class': 'form-control'}),
+            'engine_displacement': forms.NumberInput(attrs={'class':'form-control'}),
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 5,
                 'placeholder': 'Unesite kratak opis automobila...'
             }),
+           
         }
         
 
