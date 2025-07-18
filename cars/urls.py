@@ -23,6 +23,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
 
     path('guest-login/', views.guest_login, name='guest_login'),
+     path('accounts/', include('allauth.urls')),
 
 ]
 

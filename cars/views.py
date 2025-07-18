@@ -16,7 +16,8 @@ def car_list(request):
     displacement_min = request.GET.get('displacement_min')
     displacement_max = request.GET.get('displacement_max')
 
-    cars = Car.objects.all()
+    cars = Car.objects.all().order_by('-created_at')
+
 
     if fuel_filter:
         cars = cars.filter(fuel_type=fuel_filter)
