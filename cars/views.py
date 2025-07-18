@@ -7,6 +7,8 @@ from django.contrib.auth import logout as auth_logout
 from django.db.models import Q
 from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
+from .models import UserProfile
+from .forms import UserProfileForm
 
 def car_list(request):
     fuel_filter = request.GET.get('fuel_type')
@@ -52,8 +54,9 @@ def car_list(request):
 
 @login_required
 def profile(request):
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
     cars = Car.objects.filter(owner= request.user)
-    return render (request, 'cars/profile.html', {'cars': cars})
+    return render (request, 'cars/profile.html', {'cars': cars,'profile': profile,})
 
 @login_required
 def logout_view(request):
@@ -161,3 +164,17 @@ def register(request):
     else:
         form = RegisterForm()
     return render(request, 'cars/register.html', {'form': form})
+
+@login_required
+def edit_profile(request):
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile') 
+    else:
+        form = UserProfileForm(instance=profile)
+
+    return render(request, 'cars/edit_profile.html', {'form': form})

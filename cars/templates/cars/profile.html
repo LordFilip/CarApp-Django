@@ -1,17 +1,78 @@
-{%extends 'cars/base.html' %}
-
+{% extends 'cars/base.html' %}
 {% load static %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% endblock %}
 
-{%block content%}
-    <h1>Profil korisnika</h1>
+{% block content %}
+<h1 style="font-family: Arial, sans-serif; color: #222;">Profil korisnika</h1>
+
+<div style="
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+  color: #333;
+">
+  {% if profile.profile_image %}
+    <img src="{{ profile.profile_image.url }}" alt="Profilna slika"
+      style="
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid #4a90e2;
+      ">
+  {% else %}
+    <img src="{% static 'images/default_profile.png' %}" alt="Default slika"
+      style="
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid #4a90e2;
+      ">
+  {% endif %}
+
+  <div>
+    <p style="margin: 6px 0; font-size: 1.1rem;"><strong>Korisničko ime:</strong> {{ profile.user.username }}</p>
+    <p style="margin: 6px 0; font-size: 1.1rem;"><strong>Godine:</strong> {{ profile.age }}</p>
+    <p style="margin: 6px 0; font-size: 1.1rem;"><strong>Lokacija:</strong> {{ profile.location }}</p>
+    <p style="margin: 6px 0; font-size: 1.1rem;"><strong>Broj automobila:</strong> {{ profile.number_of_cars }}</p>
+
+    <a href="{% url 'edit_profile' %}"
+      style="
+        display: inline-block;
+        margin-top: 12px;
+        padding: 8px 18px;
+        background-color: #4a90e2;
+        color: white;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      "
+      onmouseover="this.style.backgroundColor='#357ABD';"
+      onmouseout="this.style.backgroundColor='#4a90e2';"
+    >Uredi profil</a>
+  </div>
+</div>
 
 
-    <div class="car-cards-container">
-    {% for car in cars %}
-    <a href={% url 'car_details' car.id%}>
+
+<hr>
+
+<h2>Automobili</h2>
+
+<div class="car-cards-container">
+  {% for car in cars %}
+    <a href="{% url 'car_details' car.id %}">
       <div class="car-card">
         <h2>{{ car.brand }} {{ car.model }}</h2>
         <p><strong>Godina:</strong> {{ car.year }}</p>
@@ -22,8 +83,8 @@
         <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
       </div>
     </a>
-    {% empty %}
-      <p>Nema automobila.</p>
-    {% endfor %}
-  </div>
-{%endblock%}
+  {% empty %}
+    <p>Nema automobila.</p>
+  {% endfor %}
+</div>
+{% endblock %}

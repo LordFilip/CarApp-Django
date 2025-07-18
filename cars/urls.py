@@ -12,6 +12,7 @@ urlpatterns = [
     path('admin/',admin.site.urls),
 
     path('profile', views.profile, name= 'profile'),
+    path('edit_profile',views.edit_profile, name="edit_profile"),
     path('add/', views.add_car, name="add_car"),
     path('car_details/<int:car_id>',views.car_details, name= 'car_details'),
 
@@ -23,7 +24,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
 
     path('guest-login/', views.guest_login, name='guest_login'),
-     path('accounts/', include('allauth.urls')),
 
 ]
 

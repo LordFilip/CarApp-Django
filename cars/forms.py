@@ -1,5 +1,5 @@
 from django import forms
-from .models import Car
+from .models import Car, UserProfile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -30,3 +30,15 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']
+
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['profile_image', 'age', 'location']
+        widgets = {
+            'age': forms.NumberInput(attrs={'min': 0}),
+            'location': forms.TextInput(attrs={'placeholder': 'Unesite lokaciju'}),
+            'number_of_cars': forms.NumberInput(attrs={'min': 0}),
+        }

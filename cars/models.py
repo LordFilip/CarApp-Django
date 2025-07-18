@@ -45,6 +45,20 @@ class Car(models.Model):
         return f"{self.brand} {self.model} ({self.year})"
 
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    age = models.PositiveIntegerField(null=True,blank=True, help_text='Unesite svoje godine')
+    location = models.CharField(max_length=100, blank=True)
+    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
+
+    def number_of_cars(self):
+        return self.user.car_set.count()
+
+    def cars(self):
+        return self.user.car_set.all()
+
+    def __str__(self):
+        return f"{self.user.username} - {self.age} god."
 
 
 
